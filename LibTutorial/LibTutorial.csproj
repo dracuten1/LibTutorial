@@ -7,8 +7,34 @@
 
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="6.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\Application\Application.csproj" />
+    <ProjectReference Include="..\Data\Data.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Include="wwwroot\images\1a4d1ae88a03f6c03d24999aa2055d35.jpg" />
+    <None Include="wwwroot\images\9454467ac316ea683f93ff25405eee34.jpg" />
+    <None Include="wwwroot\images\9558a365adde6688d4c71a200d78310c.jpg" />
+    <None Include="wwwroot\images\bfebf4adcb31c8eb5c39fd3779cc4b68.jpg" />
+    <None Include="wwwroot\images\emma.jpg" />
+    <None Include="wwwroot\images\ff6803327456b70eb12824a0b7143795.jpg" />
+    <None Include="wwwroot\images\img117.u3059.d20170616.t100547.729023.jpg" />
+    <None Include="wwwroot\images\tuoi-tre-dang-gia-bao-nhieu-u547-d20161012-t113832-888179.u3059.d20170616.t095744.390222.jpg" />
   </ItemGroup>
 
 </Project>

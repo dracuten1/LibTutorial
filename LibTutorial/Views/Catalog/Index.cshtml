@@ -1,0 +1,32 @@
+﻿
+@model Application.Catalogs.Queries.GetBooksList.BooksListViewModel
+@{
+    ViewData["Title"] = "List books";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>List books</h1>
+<div class="container">
+    <div class="row" style="display:flex;justify-content:flex-start;align-items:center">
+        @foreach (var asset in Model.CatalogPreviewModels) {      
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2 border" style="height:300px;border-bottom:5px;">
+                <a asp-controller="Catalog" asp-action="Detail" asp-route-id="@asset.Id">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <p class="font-weight-bold text-center">BLACK FRIDAY DEAL</p>
+                        </div>
+                        <div class="panel-body" >
+                            <div style="display:flex;justify-content:center;align-items:center">
+                                <img align="middle" src="@asset.ImageUrl" class="img-fluid" alt="centered image">
+                            </div> 
+                            <p class="text-center" style="margin-bottom:5px">@asset.Title (@asset.AuthorOrDirector)</p>                            
+                        </div>
+                        <div class="panel-footer" style="text-align:center"></div>
+                    </div>
+                </a>
+            </div>
+        
+        }
+    </div>
+</div><br>
+
