@@ -30,9 +30,11 @@ namespace Application.Catalogs.Queries.GetBookDetails {
                 .Include(b=>b.Status)
                 .ToListAsync(cancellationToken);
             var bookDetailViewModel = _mapper.Map<IEnumerable<BookViewModel>>(books).FirstOrDefault();
-            var checkOutHistoris = await _context.CheckoutHistories.Where(cH => cH.LibraryAsset.Id.Equals(bookDetailViewModel.Id))
-                .Include(c=>c.LibraryCard.Patron)
+            var checkOutHistoris = await _context.CheckoutHistories
+                .Where(cH => cH.LibraryAsset.Id.Equals(bookDetailViewModel.Id))
+                .Include(c => c.LibraryCard.Patron)
                 .OrderByDescending(c=>c.CheckedIn).ToListAsync(cancellationToken);
+            //var cH = await _context.CheckoutHistories().Tolist;
             var checkOutHistoryViewModels = _mapper.Map<IEnumerable<CheckoutViewModel>>(checkOutHistoris);
             var result = new BookDetailViewModel() {
                 BookViewModel = bookDetailViewModel,
