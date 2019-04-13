@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Application.Catalogs.Commands.Checkout;
+using Application.Catalogs.Queries.GetBookCheckoutDetails;
 using Application.Catalogs.Queries.GetBookDetails;
 using Application.Catalogs.Queries.GetBooksList;
 using Data.Interfaces;
@@ -9,12 +11,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace LibTutorial.Controllers {
     public class CatalogController : BaseController
     {
-        //private readonly ICheckoutService _checkoutsService;
-        //private readonly ILibraryAsset _assetsService;
-        //public CatalogController(ILibraryAsset assetService, ICheckoutService checkoutsService) {
-        //    _assetsService = assetService;
-        //    _checkoutsService = checkoutsService;
-        //}
         public async Task<IActionResult> Index(int pageIndex, int itemsPage, int? brandId, int? typeId)
         {
             #region Old service
@@ -37,7 +33,7 @@ namespace LibTutorial.Controllers {
             //    Assets = listingResult
             //}; 
             #endregion
-            var viewModel = await Mediator.Send(new GetBookssListQuery());
+            var viewModel = await Mediator.Send(new GetBooksListQuery());
             return View(viewModel);        
         }
         [HttpGet]
@@ -74,18 +70,16 @@ namespace LibTutorial.Controllers {
             return View(viewModel);
             
         }
-        //public IActionResult Checkout(int id) {
-        //    var asset = _assetsService.Get(id);
-
-        //    var model = new CheckoutModel {
-        //        AssetId = id,
-        //        ImageUrl = asset.ImageUrl,
-        //        Title = asset.Title,
-        //        LibraryCardId = "",
-        //        IsCheckedOut = _checkoutsService.IsCheckedOut(id)
-        //    };
-        //    return View(model);
-        //}
+        public async Task<IActionResult> CheckoutAsync(int catalogId) {
+            var viewModel = await Mediator.Send(new GetBookCheckoutPreviewQuery() { Id = catalogId });
+            return View("Checkout",viewModel);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> PlaceCheckout([FromBody]CheckoutCommand command) {
+            var result = await Mediator.Send(command);
+            return View();
+        }
         //public IActionResult Hold(int id) {
         //    var asset = _assetsService.Get(id);
 

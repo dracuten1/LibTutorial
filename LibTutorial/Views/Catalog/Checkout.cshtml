@@ -1,4 +1,4 @@
-﻿@model LibTutorial.Models.Catalog.CheckoutModel
+﻿@model Application.Catalogs.Queries.GetBookCheckoutDetails.BookCheckoutPreviewModel
 @{
     ViewBag.Title = @Model.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -19,11 +19,11 @@
             <div class="col-md-9">
                 @*this is an html helper - it creates an object that implements idisposable*@
                 @using (Html.BeginForm("PlaceCheckout", "Catalog", FormMethod.Post)) {
-                    @Html.HiddenFor(a => a.AssetId)
+                    @Html.HiddenFor(a => a.Id)
                 <div class="form-group col-md-6">
                     <label for="paytronId"> Please insert a Library Card ID</label>
-                    @Html.TextBoxFor(a => a.LibraryCardId, new { id = "paytronId", placeholder = "Input your ID", style = "direction: rtl; text-align: left;"})
-                    @Html.ValidationMessageFor(a => a.LibraryCardId)
+                    @*@Html.TextBoxFor(a => a., new { id = "paytronId", placeholder = "Input your ID", style = "direction: rtl; text-align: left;"})
+                    @Html.ValidationMessageFor(a => a.)*@
                     @*write out a text box and set attributes according to info in the model*@
                 </div>
                     <div class="col align-self-end">

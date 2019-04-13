@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces.Mapping;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,5 +45,19 @@ namespace Application.Infracstructure.AutoMapper {
 
             return mapsFrom;
         }
+        //public static IList<ITypeConverter> LoadCustomConverters(Assembly rootAssembly) {
+        //    var types = rootAssembly.GetExportedTypes();
+            
+        //    var mapsFrom = (
+        //            from type in types
+        //            from instance in type.GetInterfaces()
+        //            where
+        //                typeof(ITypeConverter).IsAssignableFrom(type) &&
+        //                !type.IsAbstract &&
+        //                !type.IsInterface
+        //            select (ITypeConverter)Activator.CreateInstance(type)).ToList();
+
+        //    return mapsFrom;
+        //}
     }
 }

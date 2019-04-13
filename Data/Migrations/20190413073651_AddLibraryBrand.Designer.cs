@@ -4,48 +4,22 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    partial class LibraryContextModelSnapshot : ModelSnapshot
+    [Migration("20190413073651_AddLibraryBrand")]
+    partial class AddLibraryBrand
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.3-servicing-35854")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("Data.Models.Asset", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("AssetTypeId");
-
-                    b.Property<decimal>("Cost");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
-                    b.Property<string>("ImageUrl");
-
-                    b.Property<string>("Title");
-
-                    b.Property<int>("Year");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AssetTypeId");
-
-                    b.ToTable("AssetDetails");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Asset");
-                });
 
             modelBuilder.Entity("Data.Models.AssetType", b =>
                 {
@@ -64,7 +38,11 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Models.BranchHours", b =>
                 {
-                    b.Property<int>("BranchId");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("BranchId");
 
                     b.Property<int>("CloseTime");
 
@@ -72,7 +50,9 @@ namespace Data.Migrations
 
                     b.Property<int>("OpenTime");
 
-                    b.HasKey("BranchId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("BranchId");
 
                     b.ToTable("BranchHours");
                 });
@@ -97,7 +77,7 @@ namespace Data.Migrations
 
                     b.HasIndex("LibraryCardId");
 
-                    b.ToTable("Checkout");
+                    b.ToTable("Checkouts");
                 });
 
             modelBuilder.Entity("Data.Models.CheckoutHistory", b =>
@@ -127,25 +107,6 @@ namespace Data.Migrations
                     b.ToTable("CheckoutHistories");
                 });
 
-            modelBuilder.Entity("Data.Models.Genre", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("BookId");
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookId");
-
-                    b.ToTable("Genres");
-                });
-
             modelBuilder.Entity("Data.Models.Hold", b =>
                 {
                     b.Property<int>("Id")
@@ -173,21 +134,37 @@ namespace Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AssetDetailId");
+                    b.Property<int?>("AssetTypeId");
+
+                    b.Property<decimal>("Cost");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
+                    b.Property<string>("ImageUrl");
 
                     b.Property<int?>("LocationId");
 
-                    b.Property<int?>("StatusId");
+                    b.Property<int>("NumberOfCopies");
+
+                    b.Property<int>("StatusId");
+
+                    b.Property<string>("Title")
+                        .IsRequired();
+
+                    b.Property<int>("Year");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AssetDetailId");
+                    b.HasIndex("AssetTypeId");
 
                     b.HasIndex("LocationId");
 
                     b.HasIndex("StatusId");
 
                     b.ToTable("LibraryAssets");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("LibraryAsset");
                 });
 
             modelBuilder.Entity("Data.Models.LibraryBranch", b =>
@@ -268,9 +245,11 @@ namespace Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .IsRequired();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -279,43 +258,35 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Models.Book", b =>
                 {
-                    b.HasBaseType("Data.Models.Asset");
+                    b.HasBaseType("Data.Models.LibraryAsset");
 
-                    b.Property<string>("Author");
+                    b.Property<string>("Author")
+                        .IsRequired();
 
-                    b.Property<string>("DeweyIndex");
+                    b.Property<string>("DeweyIndex")
+                        .IsRequired();
 
-                    b.Property<string>("ISBN");
+                    b.Property<string>("ISBN")
+                        .IsRequired();
 
                     b.HasDiscriminator().HasValue("Book");
                 });
 
             modelBuilder.Entity("Data.Models.Video", b =>
                 {
-                    b.HasBaseType("Data.Models.Asset");
+                    b.HasBaseType("Data.Models.LibraryAsset");
 
-                    b.Property<string>("Director");
-
-                    b.Property<int?>("GenreId");
-
-                    b.HasIndex("GenreId");
+                    b.Property<string>("Director")
+                        .IsRequired();
 
                     b.HasDiscriminator().HasValue("Video");
-                });
-
-            modelBuilder.Entity("Data.Models.Asset", b =>
-                {
-                    b.HasOne("Data.Models.AssetType", "AssetType")
-                        .WithMany("AssetDetails")
-                        .HasForeignKey("AssetTypeId");
                 });
 
             modelBuilder.Entity("Data.Models.BranchHours", b =>
                 {
                     b.HasOne("Data.Models.LibraryBranch", "Branch")
                         .WithMany()
-                        .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("BranchId");
                 });
 
             modelBuilder.Entity("Data.Models.Checkout", b =>
@@ -345,13 +316,6 @@ namespace Data.Migrations
                         .HasForeignKey("LibraryCardId");
                 });
 
-            modelBuilder.Entity("Data.Models.Genre", b =>
-                {
-                    b.HasOne("Data.Models.Book")
-                        .WithMany("Genres")
-                        .HasForeignKey("BookId");
-                });
-
             modelBuilder.Entity("Data.Models.Hold", b =>
                 {
                     b.HasOne("Data.Models.LibraryAsset", "LibraryAsset")
@@ -365,17 +329,18 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Models.LibraryAsset", b =>
                 {
-                    b.HasOne("Data.Models.Asset", "AssetDetail")
-                        .WithMany("LibraryAssets")
-                        .HasForeignKey("AssetDetailId");
+                    b.HasOne("Data.Models.AssetType", "AssetType")
+                        .WithMany()
+                        .HasForeignKey("AssetTypeId");
 
                     b.HasOne("Data.Models.LibraryBranch", "Location")
                         .WithMany("LibraryAssets")
                         .HasForeignKey("LocationId");
 
                     b.HasOne("Data.Models.Status", "Status")
-                        .WithMany("LibraryAssets")
-                        .HasForeignKey("StatusId");
+                        .WithMany()
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Data.Models.LibraryCard", b =>
@@ -391,13 +356,6 @@ namespace Data.Migrations
                     b.HasOne("Data.Models.LibraryBranch", "HomeLibraryBranch")
                         .WithMany("Patrons")
                         .HasForeignKey("HomeLibraryBranchId");
-                });
-
-            modelBuilder.Entity("Data.Models.Video", b =>
-                {
-                    b.HasOne("Data.Models.Genre", "Genre")
-                        .WithMany()
-                        .HasForeignKey("GenreId");
                 });
 #pragma warning restore 612, 618
         }

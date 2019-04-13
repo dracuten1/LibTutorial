@@ -12,6 +12,9 @@ using MediatR;
 using AutoMapper;
 using Application.Infracstructure.AutoMapper;
 using Application.Infracstructure;
+using LibTutorial.Filters;
+using FluentValidation.AspNetCore;
+using Application.Catalogs.Commands.Checkout;
 
 namespace LibTutorial {
     public class Startup {
@@ -32,12 +35,19 @@ namespace LibTutorial {
             services.AddAutoMapper(new Assembly[] { typeof(AutoMapperProfile).GetTypeInfo().Assembly });
             // Add Mediator
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehavior<,>));
-            services.AddMediatR(typeof(GetBooksListQueryHandler).GetTypeInfo().Assembly);
-            
+            services.AddMediatR(typeof(BookCheckOutHandler).GetTypeInfo().Assembly);
+
             //services.AddScoped<ILibraryAsset, LibraryAssetService>();
             //services.AddScoped<ICheckoutService, CheckoutService>();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<LibraryContext>(options => options.UseSqlServer(Configuration.GetConnectionString("LibraryConnection")));
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services
+                .AddMvc(options => options.Filters.Add(typeof(CustomExceptionFilterAttribute)))
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CheckoutCommandValidator>());
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

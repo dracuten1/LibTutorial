@@ -7,17 +7,17 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace Application.Catalogs.Queries.GetBooksList {
-    public class GetBooksListQueryHandler : IRequestHandler<GetBookssListQuery, BooksListViewModel> {
+    public class BookCheckOutHandler : IRequestHandler<GetBooksListQuery, BooksListViewDto> {
         private readonly LibraryContext _context;
         private readonly IMapper _mapper;
 
-        public GetBooksListQueryHandler(LibraryContext context, IMapper mapper) {
+        public BookCheckOutHandler(LibraryContext context, IMapper mapper) {
             _context = context;
             _mapper = mapper;
         }
-        public async Task<BooksListViewModel> Handle(GetBookssListQuery request, CancellationToken cancellationToken) {
-            return new BooksListViewModel() {
-                CatalogPreviewModels = await _context.Books.ProjectTo<BookPreviewModel>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken)
+        public async Task<BooksListViewDto> Handle(GetBooksListQuery request, CancellationToken cancellationToken) {
+            return new BooksListViewDto() {
+                CatalogPreviewModels = await _context.Books.ProjectTo<BookPreviewDto>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken)
             };
         }
     }

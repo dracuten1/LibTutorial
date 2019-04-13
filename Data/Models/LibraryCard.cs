@@ -5,8 +5,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Models {
     public class LibraryCard {
-        //public int Id { get; set; }
-
         [Display(Name = "Overdue Fees")]
         public decimal Fees { get; set; }
 

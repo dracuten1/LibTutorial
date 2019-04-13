@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Application.Infracstructure.AutoMapper.Converters;
+using AutoMapper;
 using System.Reflection;
 
 namespace Application.Infracstructure.AutoMapper {
@@ -10,7 +11,7 @@ namespace Application.Infracstructure.AutoMapper {
         }
 
         private void LoadConverters() {
-
+            //CreateMap<>
         }
 
         private void LoadStandardMappings() {
@@ -18,6 +19,8 @@ namespace Application.Infracstructure.AutoMapper {
 
             foreach (var map in mapsFrom) {
                 CreateMap(map.Source, map.Destination).ReverseMap();
+               // CreateMap(map.Source, map.Destination).ConvertUsing(GenreConverter);
+                
             }
         }
 

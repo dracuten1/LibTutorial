@@ -1,4 +1,4 @@
-﻿@model Application.Catalogs.Queries.GetBookDetails.Models.BookDetailViewModel
+﻿@model Application.Catalogs.Queries.GetBookDetails.Models.BookDetailViewDto
 @{
     ViewBag.Title = @Model.BookViewModel.Title;
 }
@@ -34,10 +34,10 @@
             <div class="col-md-4">
                 <p id="itemTitle">@Model.BookViewModel.Title</p>
                 <p id="itemAuthor">@Model.BookViewModel.AuthorOrDirector</p>
-                <p id="itemStatus">@Model.BookViewModel.Status</p>
+                @*<p id="itemStatus">@Model.BookViewModel.Status</p>*@
                 <p id="itemType">@Model.BookViewModel.Type</p>
-                <p id="itemLocation">Last Location: @Model.BookViewModel.CurrentLocation</p>
-                @if (Model.BookViewModel.Status == "Checked Out") {
+                @*<p id="itemLocation">Last Location: @Model.BookViewModel.</p>*@
+                @*@if (Model.BookViewModel.Status == "Checked Out") {
                     <p id="itemPatron">Checked Out By: @Model.CheckOutViewModelHistoris.First().PatronName</p>
                 }
                 @if (Model.BookViewModel.Status != "Lost") {
@@ -51,7 +51,7 @@
                     }
 
                     <p><a class="btn btn-lg btn-danger" role="button" asp-controller="Catalog" asp-action="MarkLost" asp-route-id="@Model.BookViewModel.Id">Mark Item Lost</a></p>
-                }
+                }*@
 
                 else {
                     <p>This item has been lost. It cannot be checked out.</p>
@@ -106,12 +106,13 @@
             </table>
         </div>
         @*<div class="col-lg-6">
-            <h4>Current Holds</h4>
+            <h4>Current Holds location</h4>
             <table class="table table-bordered table-hover table-condensed">
                 <thead>
                     <tr>
                         <th>Hold Placed</th>
                         <th>Patron</th>
+                        <th>Amount</th>
                     </tr>
                 </thead>
                 <tbody>

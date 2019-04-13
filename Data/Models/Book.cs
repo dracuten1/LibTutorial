@@ -1,12 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Data.Models {
-    public class Book:LibraryAsset {
-        [Required] [Display(Name = "ISBN #")]
+    public class Book : Asset {
         public string ISBN { get; set; }
-        [Required]
         public string Author { get; set; }
-        [Required] [Display(Name = "DDC")]
         public string DeweyIndex { get; set; }
+        public virtual ICollection<Genre> Genres { get; set; }
     }
 }

@@ -14,7 +14,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace Application.Catalogs.Queries.GetBookDetails {
-    public class GetBookDetailQueryHandler : IRequestHandler<GetBookDetailQuery, BookDetailViewModel> {
+    public class GetBookDetailQueryHandler : IRequestHandler<GetBookDetailQuery, BookDetailViewDto> {
         private readonly LibraryContext _context;
         private readonly IMapper _mapper;
 
@@ -23,20 +23,21 @@ namespace Application.Catalogs.Queries.GetBookDetails {
             _mapper = mapper;
         }
 
-        public async Task<BookDetailViewModel> Handle(GetBookDetailQuery request, CancellationToken cancellationToken) {
-            var books = await _context.Books.Where(b=>b.Id==request.Id)
+        public async Task<BookDetailViewDto> Handle(GetBookDetailQuery request, CancellationToken cancellationToken) {
+            var book = await _context.Books.Where(b=>b.Id==request.Id)
                 .Include(b=>b.AssetType)
-                .Include(b=>b.Location)
-                .Include(b=>b.Status)
-                .ToListAsync(cancellationToken);
-            var bookDetailViewModel = _mapper.Map<IEnumerable<BookViewModel>>(books).FirstOrDefault();
+                .SingleAsync(cancellationToken);
+
+            var bookDetailViewModel = _mapper.Map<IEnumerable<BookViewDto>>(book).FirstOrDefault();
+
             var checkOutHistoris = await _context.CheckoutHistories
                 .Where(cH => cH.LibraryAsset.Id.Equals(bookDetailViewModel.Id))
                 .Include(c => c.LibraryCard.Patron)
                 .OrderByDescending(c=>c.CheckedIn).ToListAsync(cancellationToken);
+
             //var cH = await _context.CheckoutHistories().Tolist;
-            var checkOutHistoryViewModels = _mapper.Map<IEnumerable<CheckoutViewModel>>(checkOutHistoris);
-            var result = new BookDetailViewModel() {
+            var checkOutHistoryViewModels = _mapper.Map<IEnumerable<CheckoutViewDto>>(checkOutHistoris);
+            var result = new BookDetailViewDto() {
                 BookViewModel = bookDetailViewModel,
                 CheckOutViewModelHistoris = checkOutHistoryViewModels
             };

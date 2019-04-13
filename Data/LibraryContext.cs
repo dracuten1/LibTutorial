@@ -9,7 +9,7 @@ namespace Data {
 
         public virtual DbSet<Book> Books { get; set; }
         public virtual DbSet<Video> Videos { get; set; }
-        public virtual DbSet<Checkout> Checkouts { get; set; }
+        public virtual DbSet<Asset> AssetDetails { get; set; }
         public virtual DbSet<CheckoutHistory> CheckoutHistories { get; set; }
         public virtual DbSet<LibraryBranch> LibraryBranches { get; set; }
         public virtual DbSet<BranchHours> BranchHours { get; set; }
@@ -19,5 +19,6 @@ namespace Data {
         public virtual DbSet<LibraryAsset> LibraryAssets { get; set; }
         public virtual DbSet<AssetType> AssetTypes { get; set; }
         public virtual DbSet<Hold> Holds { get; set; }
+        public virtual DbSet<Genre> Genres { get; set; }
     }
 }

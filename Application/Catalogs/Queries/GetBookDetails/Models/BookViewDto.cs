@@ -7,25 +7,24 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Application.Catalogs.Queries.GetBookDetails.Models {
-    public class BookViewModel : BookPreviewModel {
+    public class BookViewDto : BookPreviewDto {
         public string Type { get; set; }
         public int Year { get; set; }
         public string Isbn { get; set; }
         public string Dewey { get; set; }
-        public string Status { get; set; }
+        public List<string> Genres { get; set; }
         public decimal Cost { get; set; }
-        public string CurrentLocation { get; set; }
 
         public override void CreateMappings(Profile configuration) {
-            configuration.CreateMap<Book, BookViewModel>()
-                .IncludeBase<Book, BookPreviewModel>()
+            configuration.CreateMap<Book, BookViewDto>()
+                .IncludeBase<Book, BookPreviewDto>()
                 .ForMember(cDTO => cDTO.Year, opt => opt.MapFrom(b => b.Year))
                 .ForMember(cDTO => cDTO.Isbn, opt => opt.MapFrom(b => b.ISBN))
                 .ForMember(cDTO => cDTO.Cost, opt => opt.MapFrom(b => b.Cost))
-                .ForMember(cDTO => cDTO.Dewey, opt => opt.MapFrom(b => b.DeweyIndex))
-                .ForMember(cDTO => cDTO.Status, opt => opt.MapFrom(b => b.Status))
+                .ForMember(cDTO => cDTO.Dewey, opt => opt.MapFrom(b => b.DeweyIndex))               
                 .ForMember(cDTO => cDTO.Type, opt => opt.MapFrom(b => b.AssetType.Name))
-                .ForMember(cDTO => cDTO.CurrentLocation, opt => opt.MapFrom(b => b.Location.Address));
+                .ForMember(cDTO => cDTO.Genres, opt => opt.MapFrom(b => b.Genres))           
+                ;
         }
     }
 }
