@@ -1,5 +1,5 @@
 ﻿
-@model Application.Catalogs.Queries.GetBooksList.BooksListViewDto
+@model Application.Catalogs.Models.ProductsListViewDto
 @{
     ViewData["Title"] = "List books";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -17,9 +17,9 @@
                         </div>
                         <div class="panel-body" >
                             <div style="display:flex;justify-content:center;align-items:center">
-                                <img align="middle" src="@asset.ImageUrl" class="img-fluid" alt="centered image">
+                                <img align="middle" src="~/images/@asset.ImgUrls.FirstOrDefault()" class="img-fluid" alt="centered image">
                             </div> 
-                            <p class="text-center" style="margin-bottom:5px">@asset.Title (@asset.AuthorOrDirector)</p>                            
+                            @*<p class="text-center" style="margin-bottom:5px">@asset.Title (@asset.AuthorOrDirector)</p>*@                            
                         </div>
                         <div class="panel-footer" style="text-align:center"></div>
                     </div>

@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 namespace Application.Infracstructure {
     public class RequestLogger<TRequest> : IRequestPreProcessor<TRequest> {
         //private readonly ILogger _logger;
-        private string mes;
+        
         public RequestLogger(/*ILogger<TRequest> logger*/) {
-            mes = "Logger constructor";
         }
 
         public Task Process(TRequest request, CancellationToken cancellationToken) {

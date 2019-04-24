@@ -7,7 +7,7 @@ namespace Data.Models {
 
         [Required]
         [Display(Name = "Library Asset")]
-        public LibraryAsset LibraryAsset { get; set; }
+        public AssetInLibrary LibraryAsset { get; set; }
 
         [Display(Name = "Library Card")]
         public LibraryCard LibraryCard { get; set; }

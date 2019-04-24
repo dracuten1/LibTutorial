@@ -1,25 +1,30 @@
-﻿@model Application.Catalogs.Queries.GetBookDetails.Models.BookDetailViewDto
+﻿@model Application.Catalogs.Models.ProductDetailViewDto
 @{
-    ViewBag.Title = @Model.BookViewModel.Title;
+    ViewBag.Title = @Model.ProductViewModel.Title;
 }
 <div class="container">
     <div class="header clearfix detailHeading">
         <h2 class="text-muted">View Library Item</h2>
     </div>
-    <div class="jumbotron">
+    <div class="jumbotron" 
+         style="
+            padding-top: 10px;
+            padding-left: 10px;
+            padding-bottom: 10px;
+            padding-right: 10px;
+        ">
         <div class="row">
             <div class="col-md-4">
-                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner">;;
+                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel"  style="width:100%; height:500px !important;">
+                    <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="@Model.BookViewModel.ImageUrl" class="d-block w-100" alt="...">
+                            <img src="~/images/@Model.ProductViewModel.ImgUrls[0]" class="d-block w-100" alt="...">
                         </div>
-                        <div class="carousel-item">
-                            <img src="https://lh3.googleusercontent.com/H2yJ2GgbUQttXXT2LIcWAUoza7h0Z_o81gB5KDiMYvn0HGONCSybMP1STc9qnQTOAf459yBXakcINeQBzk6xmopuixaTbPYld12ZblohF10aoL1WG24r4rlyVHuhxgq4HrZBIIL4PY8JIOAYBhjF_TJAX2eaMpSHrfr60xuuIlk7eU9xY_3_wLMvHormOr8tyQZ9HEh5YwbTrwn0JosckfyjDL6XJg3CD_FrdE9jyntSJNvYJnuVf1YHKdyk446kR9mIphveXPan6fvLjLNgCh8nZnRGOYd-AERMr16g0YIUKB2XjF6QvSB27ng6iCq_al4zdC9R8Cy1JxwlfbCzqrqnDCHsAHIxvT9M-WjIhZvpZR7rXjkCeUaO4eFL_q6jEF-BwndIKmORK5xkRFnyf6XJqLR_pVDsdqvfyJWmMgyp4Sh3UO0UQpKyqV5TnzpcfhioaapAkdamllI-udi9ETOKfY4tLMxWAorI0cLZ8Yv6jek8ZPq30LADXMsiKcRA6mNb2YJZvABROxleZKtw8SSek8ZFSTzmMfgiKZqWYQRmg8BLHNkA2h-AgboAHAQEkN2hxliXCAf5LWpfa7M3ea3biam95MvzMLjzhdCKsCTe9dVOCBKlG5HOlUYo-Z-S-vogAsF56B6kL6fo5XRDmoItUmFR3Oo=w781-h1041-no" class="d-block w-100" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="https://lh3.googleusercontent.com/Mvz_0w73QbCLR9WGQd1ycngq3iMFYf7i6xlMax6tnXj_gCjjcyV2SNg3rqqeRzzhTpD45gprEQFxZ6aeXmeuHMtV_PxHMni40EA63zvAVH1ec26BdujARScYynuY4ePQLjtjFPZQY3Q3HAwPHWkmOR2diFqe4wgejjVeJS5PUaezYwUWSIWskFlhb18GqeXAkZypqZXKOKyIL5EcHlnEA73Axw3Ml_LtyJIqVcsqfYM3405g0PhzDFFjvIl3K7mDS8zYfw_CmmeowVjkhO8-2kH7rQkdKThResntLrg0mttkS2e67EK2F8FsWcC2h9AgkElWbhQFxFSP1VPwCDxcuFddEeSCDWvCqSE-QyOixNWHTayfyA-3puKOHxJlpAo55Gj4SYcF0lSgOHtYNZqp_xWU5Txyr0AJC7tG3Vwe-ZBq-7A_CHBs6C0VF5JxoDI2GpDrvpxoXJxefLFe3LqXMiKPkAqNZzaZfd5MVIoWssZGbuvfRzmRqQQgY-UV-KqPtXTIzBHvELOEe-oya3aHeFnVlZgHBp7fQTYQ2n0lPyjiur6zc5b7Wg0jEJnRoI_vV_FroDifQQtnXi5z8SQFjjDGrwoEFRqibq-w029QyRa9i4NDR9AR7JDFDRyS1OAPjcj-PkSt-W18kpcPZaRAlbJDOdNspSY=w1388-h1041-no" class="d-block w-100" alt="...">
-                        </div>
+                        @foreach (var img in @Model.ProductViewModel.ImgUrls) {
+                            <div class="carousel-item">
+                                <img src="~/images/@img" class="d-block w-100" alt="...">
+                            </div>
+                        }
                     </div>
                     <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -32,45 +37,45 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <p id="itemTitle">@Model.BookViewModel.Title</p>
-                <p id="itemAuthor">@Model.BookViewModel.AuthorOrDirector</p>
+                <p id="itemTitle">@Model.ProductViewModel.Title</p>
+                @*<p id="itemAuthor">@Model.ProductViewModel.AuthorOrDirector</p>*@
                 @*<p id="itemStatus">@Model.BookViewModel.Status</p>*@
-                <p id="itemType">@Model.BookViewModel.Type</p>
+                <p id="itemType">@Model.ProductViewModel.Type</p>
                 @*<p id="itemLocation">Last Location: @Model.BookViewModel.</p>*@
                 @*@if (Model.BookViewModel.Status == "Checked Out") {
-                    <p id="itemPatron">Checked Out By: @Model.CheckOutViewModelHistoris.First().PatronName</p>
-                }
-                @if (Model.BookViewModel.Status != "Lost") {
-                    @if (Model.BookViewModel.Status == "Available") {
-                        <p><a class="btn btn-lg btn-info" role="button" asp-controller="Catalog" asp-action="Checkout" asp-route-id="@Model.BookViewModel.Id">Check Out</a></p>
+                        <p id="itemPatron">Checked Out By: @Model.CheckOutViewModelHistoris.First().PatronName</p>
                     }
+                    @if (Model.BookViewModel.Status != "Lost") {
+                        @if (Model.BookViewModel.Status == "Available") {
+                            <p><a class="btn btn-lg btn-info" role="button" asp-controller="Catalog" asp-action="Checkout" asp-route-id="@Model.BookViewModel.Id">Check Out</a></p>
+                        }
 
-                    @if (Model.BookViewModel.Status == "Checked Out") {
-                        <p><a class="btn btn-lg btn-success" role="button" asp-controller="Catalog" asp-action="CheckIn" asp-route-id="@Model.BookViewModel.Id">Check In</a></p>
-                        <p><a class="btn btn-lg btn-warning" role="button" asp-controller="Catalog" asp-action="Hold" asp-route-id="@Model.BookViewModel.Id">Place Hold</a></p>
-                    }
+                        @if (Model.BookViewModel.Status == "Checked Out") {
+                            <p><a class="btn btn-lg btn-success" role="button" asp-controller="Catalog" asp-action="CheckIn" asp-route-id="@Model.BookViewModel.Id">Check In</a></p>
+                            <p><a class="btn btn-lg btn-warning" role="button" asp-controller="Catalog" asp-action="Hold" asp-route-id="@Model.BookViewModel.Id">Place Hold</a></p>
+                        }
 
-                    <p><a class="btn btn-lg btn-danger" role="button" asp-controller="Catalog" asp-action="MarkLost" asp-route-id="@Model.BookViewModel.Id">Mark Item Lost</a></p>
-                }*@
+                        <p><a class="btn btn-lg btn-danger" role="button" asp-controller="Catalog" asp-action="MarkLost" asp-route-id="@Model.BookViewModel.Id">Mark Item Lost</a></p>
+                    }*@
 
-                else {
+                @*else {
                     <p>This item has been lost. It cannot be checked out.</p>
                     <p><a class="btn btn-lg btn-success" role="button" asp-controller="Catalog" asp-action="MarkFound" asp-route-id="@Model.BookViewModel.Id">Mark Item Found</a></p>
-                }
+                    }*@
             </div>
             <div class="col-md-4 detailInfo">
                 <table>
-                    <tr>
-                        <td class="itemLabel">ISBN: </td>
-                        <td class="itemValue">@Model.BookViewModel.Isbn</td>
-                    </tr>
-                    <tr>
-                        <td class="itemLabel">Call Number: </td>
-                        <td class="itemValue">@Model.BookViewModel.Dewey</td>
-                    </tr>
+                    @*<tr>
+                            <td class="itemLabel">ISBN: </td>
+                            <td class="itemValue">@Model.BookViewModel.Isbn</td>
+                        </tr>
+                        <tr>
+                            <td class="itemLabel">Call Number: </td>
+                            <td class="itemValue">@Model.BookViewModel.Dewey</td>
+                        </tr>*@
                     <tr>
                         <td class="itemLabel">Replacement Cost: </td>
-                        <td class="itemValue">$@Model.BookViewModel.Cost</td>
+                        <td class="itemValue">$@Model.ProductViewModel.Cost</td>
                     </tr>
                 </table>
             </div>
@@ -106,28 +111,28 @@
             </table>
         </div>
         @*<div class="col-lg-6">
-            <h4>Current Holds location</h4>
-            <table class="table table-bordered table-hover table-condensed">
-                <thead>
-                    <tr>
-                        <th>Hold Placed</th>
-                        <th>Patron</th>
-                        <th>Amount</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var hold in @Model.CurrentHolds) {
+                <h4>Current Holds location</h4>
+                <table class="table table-bordered table-hover table-condensed">
+                    <thead>
                         <tr>
-                            <td>
-                                @hold.HoldPlaced
-                            </td>
-                            <td>
-                                @hold.PatronName
-                            </td>
+                            <th>Hold Placed</th>
+                            <th>Patron</th>
+                            <th>Amount</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
-        </div>*@
+                    </thead>
+                    <tbody>
+                        @foreach (var hold in @Model.CurrentHolds) {
+                            <tr>
+                                <td>
+                                    @hold.HoldPlaced
+                                </td>
+                                <td>
+                                    @hold.PatronName
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>*@
     </div>
 </div>

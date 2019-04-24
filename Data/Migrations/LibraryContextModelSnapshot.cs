@@ -19,35 +19,7 @@ namespace Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Data.Models.Asset", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("AssetTypeId");
-
-                    b.Property<decimal>("Cost");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
-                    b.Property<string>("ImageUrl");
-
-                    b.Property<string>("Title");
-
-                    b.Property<int>("Year");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AssetTypeId");
-
-                    b.ToTable("AssetDetails");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Asset");
-                });
-
-            modelBuilder.Entity("Data.Models.AssetType", b =>
+            modelBuilder.Entity("Data.Models.AssetCategory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -57,9 +29,59 @@ namespace Data.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<int?>("ParentId");
+
                     b.HasKey("Id");
 
-                    b.ToTable("AssetTypes");
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("AssetCategories");
+                });
+
+            modelBuilder.Entity("Data.Models.AssetInLibrary", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("LocationId");
+
+                    b.Property<int?>("ProductId");
+
+                    b.Property<int?>("StatusId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LocationId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("StatusId");
+
+                    b.ToTable("AssetInLibrary");
+                });
+
+            modelBuilder.Entity("Data.Models.AttributeValue", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AttributeTypeId");
+
+                    b.Property<int?>("CategoryAttributeId");
+
+                    b.Property<int?>("ProductId");
+
+                    b.Property<string>("Value");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryAttributeId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("AttributeValues");
                 });
 
             modelBuilder.Entity("Data.Models.BranchHours", b =>
@@ -75,6 +97,27 @@ namespace Data.Migrations
                     b.HasKey("BranchId");
 
                     b.ToTable("BranchHours");
+                });
+
+            modelBuilder.Entity("Data.Models.CategoryAttribute", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AssetCategoryId");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("ValueSystemType");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssetCategoryId");
+
+                    b.ToTable("AttributeTypes");
                 });
 
             modelBuilder.Entity("Data.Models.Checkout", b =>
@@ -112,38 +155,15 @@ namespace Data.Migrations
 
                     b.Property<int?>("LibraryAssetId");
 
-                    b.Property<int?>("LibraryBranchId");
-
                     b.Property<int?>("LibraryCardId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("LibraryAssetId");
 
-                    b.HasIndex("LibraryBranchId");
-
                     b.HasIndex("LibraryCardId");
 
                     b.ToTable("CheckoutHistories");
-                });
-
-            modelBuilder.Entity("Data.Models.Genre", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("BookId");
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookId");
-
-                    b.ToTable("Genres");
                 });
 
             modelBuilder.Entity("Data.Models.Hold", b =>
@@ -167,50 +187,23 @@ namespace Data.Migrations
                     b.ToTable("Holds");
                 });
 
-            modelBuilder.Entity("Data.Models.LibraryAsset", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("AssetDetailId");
-
-                    b.Property<int?>("LocationId");
-
-                    b.Property<int?>("StatusId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AssetDetailId");
-
-                    b.HasIndex("LocationId");
-
-                    b.HasIndex("StatusId");
-
-                    b.ToTable("LibraryAssets");
-                });
-
             modelBuilder.Entity("Data.Models.LibraryBranch", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Address")
-                        .IsRequired();
+                    b.Property<string>("Address");
 
                     b.Property<string>("Description");
 
                     b.Property<string>("ImageUrl");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(30);
+                    b.Property<string>("Name");
 
                     b.Property<DateTime>("OpenDate");
 
-                    b.Property<string>("Telephone")
-                        .IsRequired();
+                    b.Property<string>("Telephone");
 
                     b.HasKey("Id");
 
@@ -236,22 +229,17 @@ namespace Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Address")
-                        .IsRequired();
+                    b.Property<string>("Address");
 
                     b.Property<DateTime>("DateOfBirth");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(30);
+                    b.Property<string>("FirstName");
 
                     b.Property<string>("Gender");
 
                     b.Property<int?>("HomeLibraryBranchId");
 
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(30);
+                    b.Property<string>("LastName");
 
                     b.Property<string>("Telephone");
 
@@ -260,6 +248,29 @@ namespace Data.Migrations
                     b.HasIndex("HomeLibraryBranchId");
 
                     b.ToTable("Patrons");
+                });
+
+            modelBuilder.Entity("Data.Models.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AssetCategoryId");
+
+                    b.Property<decimal>("Cost");
+
+                    b.Property<string>("ImageUrls");
+
+                    b.Property<string>("Title");
+
+                    b.Property<int>("Year");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssetCategoryId");
+
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Data.Models.Status", b =>
@@ -277,37 +288,37 @@ namespace Data.Migrations
                     b.ToTable("Statuses");
                 });
 
-            modelBuilder.Entity("Data.Models.Book", b =>
+            modelBuilder.Entity("Data.Models.AssetCategory", b =>
                 {
-                    b.HasBaseType("Data.Models.Asset");
-
-                    b.Property<string>("Author");
-
-                    b.Property<string>("DeweyIndex");
-
-                    b.Property<string>("ISBN");
-
-                    b.HasDiscriminator().HasValue("Book");
+                    b.HasOne("Data.Models.AssetCategory", "Parent")
+                        .WithMany("Children")
+                        .HasForeignKey("ParentId");
                 });
 
-            modelBuilder.Entity("Data.Models.Video", b =>
+            modelBuilder.Entity("Data.Models.AssetInLibrary", b =>
                 {
-                    b.HasBaseType("Data.Models.Asset");
+                    b.HasOne("Data.Models.LibraryBranch", "Location")
+                        .WithMany("LibraryAssets")
+                        .HasForeignKey("LocationId");
 
-                    b.Property<string>("Director");
+                    b.HasOne("Data.Models.Product", "Product")
+                        .WithMany("AssetInLibraries")
+                        .HasForeignKey("ProductId");
 
-                    b.Property<int?>("GenreId");
-
-                    b.HasIndex("GenreId");
-
-                    b.HasDiscriminator().HasValue("Video");
+                    b.HasOne("Data.Models.Status", "Status")
+                        .WithMany("LibraryAssets")
+                        .HasForeignKey("StatusId");
                 });
 
-            modelBuilder.Entity("Data.Models.Asset", b =>
+            modelBuilder.Entity("Data.Models.AttributeValue", b =>
                 {
-                    b.HasOne("Data.Models.AssetType", "AssetType")
-                        .WithMany("AssetDetails")
-                        .HasForeignKey("AssetTypeId");
+                    b.HasOne("Data.Models.CategoryAttribute", "CategoryAttribute")
+                        .WithMany()
+                        .HasForeignKey("CategoryAttributeId");
+
+                    b.HasOne("Data.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId");
                 });
 
             modelBuilder.Entity("Data.Models.BranchHours", b =>
@@ -318,9 +329,16 @@ namespace Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("Data.Models.CategoryAttribute", b =>
+                {
+                    b.HasOne("Data.Models.AssetCategory", "AssetCategory")
+                        .WithMany("OrtherAttributes")
+                        .HasForeignKey("AssetCategoryId");
+                });
+
             modelBuilder.Entity("Data.Models.Checkout", b =>
                 {
-                    b.HasOne("Data.Models.LibraryAsset", "LibraryAsset")
+                    b.HasOne("Data.Models.AssetInLibrary", "LibraryAsset")
                         .WithMany()
                         .HasForeignKey("LibraryAssetId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -332,50 +350,24 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Models.CheckoutHistory", b =>
                 {
-                    b.HasOne("Data.Models.LibraryAsset", "LibraryAsset")
+                    b.HasOne("Data.Models.AssetInLibrary", "LibraryAsset")
                         .WithMany()
                         .HasForeignKey("LibraryAssetId");
-
-                    b.HasOne("Data.Models.LibraryBranch", "LibraryBranch")
-                        .WithMany()
-                        .HasForeignKey("LibraryBranchId");
 
                     b.HasOne("Data.Models.LibraryCard", "LibraryCard")
                         .WithMany()
                         .HasForeignKey("LibraryCardId");
-                });
-
-            modelBuilder.Entity("Data.Models.Genre", b =>
-                {
-                    b.HasOne("Data.Models.Book")
-                        .WithMany("Genres")
-                        .HasForeignKey("BookId");
                 });
 
             modelBuilder.Entity("Data.Models.Hold", b =>
                 {
-                    b.HasOne("Data.Models.LibraryAsset", "LibraryAsset")
+                    b.HasOne("Data.Models.AssetInLibrary", "LibraryAsset")
                         .WithMany()
                         .HasForeignKey("LibraryAssetId");
 
                     b.HasOne("Data.Models.LibraryCard", "LibraryCard")
                         .WithMany()
                         .HasForeignKey("LibraryCardId");
-                });
-
-            modelBuilder.Entity("Data.Models.LibraryAsset", b =>
-                {
-                    b.HasOne("Data.Models.Asset", "AssetDetail")
-                        .WithMany("LibraryAssets")
-                        .HasForeignKey("AssetDetailId");
-
-                    b.HasOne("Data.Models.LibraryBranch", "Location")
-                        .WithMany("LibraryAssets")
-                        .HasForeignKey("LocationId");
-
-                    b.HasOne("Data.Models.Status", "Status")
-                        .WithMany("LibraryAssets")
-                        .HasForeignKey("StatusId");
                 });
 
             modelBuilder.Entity("Data.Models.LibraryCard", b =>
@@ -393,11 +385,11 @@ namespace Data.Migrations
                         .HasForeignKey("HomeLibraryBranchId");
                 });
 
-            modelBuilder.Entity("Data.Models.Video", b =>
+            modelBuilder.Entity("Data.Models.Product", b =>
                 {
-                    b.HasOne("Data.Models.Genre", "Genre")
-                        .WithMany()
-                        .HasForeignKey("GenreId");
+                    b.HasOne("Data.Models.AssetCategory", "AssetCategory")
+                        .WithMany("Products")
+                        .HasForeignKey("AssetCategoryId");
                 });
 #pragma warning restore 612, 618
         }

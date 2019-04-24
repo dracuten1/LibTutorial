@@ -15,14 +15,14 @@ namespace Application.Catalogs.Commands.Checkout {
             _context = context;
         }
         public async Task<Unit> Handle(CheckoutCommand request, CancellationToken cancellationToken) {
-            var bookToCheckout = await _context.Books.SingleAsync(b => b.Id.Equals(request.CatalogId),cancellationToken);
-            var libraryCardToCheckout = await _context.LibraryCards.SingleAsync(b => b.Id.Equals(request.PatronId),cancellationToken);
+            var ProductToCheckout = await _context.Products.SingleAsync(b => b.Id.Equals(request.CatalogId), cancellationToken);
+            var libraryCardToCheckout = await _context.LibraryCards.SingleAsync(b => b.Id.Equals(request.PatronId), cancellationToken);
             var checkout = new CheckoutHistory() {
-                //LibraryAsset = bookToCheckout,
+                //LibraryAsset = ProductToCheckout,
                 LibraryCard = libraryCardToCheckout,
                 CheckedOut = DateTime.Now
             };
-            
+
             _context.CheckoutHistories.Add(checkout);
             await _context.SaveChangesAsync(cancellationToken);
             return Unit.Value;

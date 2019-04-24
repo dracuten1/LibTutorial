@@ -1,11 +1,8 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Application.Catalogs.Commands.Checkout;
-using Application.Catalogs.Queries.GetBookCheckoutDetails;
-using Application.Catalogs.Queries.GetBookDetails;
-using Application.Catalogs.Queries.GetBooksList;
-using Data.Interfaces;
-using LibTutorial.Models.Catalog;
+using Application.Catalogs.Queries.GetProductCheckoutDetails;
+using Application.Catalogs.Queries.GetProductDetails;
+using Application.Catalogs.Queries.GetProductsList;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibTutorial.Controllers {
@@ -33,7 +30,7 @@ namespace LibTutorial.Controllers {
             //    Assets = listingResult
             //}; 
             #endregion
-            var viewModel = await Mediator.Send(new GetBooksListQuery());
+            var viewModel = await Mediator.Send(new GetProductsListQuery());
             return View(viewModel);        
         }
         [HttpGet]
@@ -66,12 +63,12 @@ namespace LibTutorial.Controllers {
 
             //return View(model); 
             #endregion
-            var viewModel = await Mediator.Send(new GetBookDetailQuery() { Id = id });
+            var viewModel = await Mediator.Send(new GetProductDetailQuery() { Id = id });
             return View(viewModel);
             
         }
         public async Task<IActionResult> CheckoutAsync(int catalogId) {
-            var viewModel = await Mediator.Send(new GetBookCheckoutPreviewQuery() { Id = catalogId });
+            var viewModel = await Mediator.Send(new ProductCheckoutQuery() { Id = catalogId });
             return View("Checkout",viewModel);
         }
         [HttpPost]

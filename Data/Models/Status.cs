@@ -7,6 +7,6 @@ namespace Data.Models {
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public virtual ICollection<LibraryAsset> LibraryAssets { get; set; }
+        public virtual ICollection<AssetInLibrary> LibraryAssets { get; set; }
     }
 }

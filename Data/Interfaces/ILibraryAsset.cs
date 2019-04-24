@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Data.Interfaces {
     public interface ILibraryAsset {
-        IEnumerable<LibraryAsset> GetAll();
-        LibraryAsset Get(int id);
-        Task<IEnumerable<LibraryAsset>> GetItems(int pageIndex, int itemsPage, int? brandId, int? typeId);
+        IEnumerable<AssetInLibrary> GetAll();
+        AssetInLibrary Get(int id);
+        Task<IEnumerable<AssetInLibrary>> GetItems(int pageIndex, int itemsPage, int? brandId, int? typeId);
 
-        void Add(LibraryAsset newAsset);
+        void Add(AssetInLibrary newAsset);
         string GetAuthorOrDirector(int id);
         string GetDeweyIndex(int id);
         string GetType(int id);

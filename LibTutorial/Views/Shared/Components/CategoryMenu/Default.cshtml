@@ -1,0 +1,17 @@
+﻿@model Application.Categories.Models.ListCategoriesDto
+@foreach (var menu in Model.CategoryPreviewDtos) {
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" asp-area="" asp-controller="Catalog" asp-action="Index" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            @menu.CategoryName
+        </a>
+        <div class="dropdown-menu">
+            @foreach (var child in menu.Children) {
+                
+                    <a class="nav-link" asp-area="" asp-controller="@child.CategoryName" asp-action="Index" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @child.CategoryName
+                    </a>
+                                
+            }
+        </div>
+    </li>
+ }

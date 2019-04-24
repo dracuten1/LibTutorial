@@ -5,9 +5,7 @@ namespace Data.Models {
     public class CheckoutHistory {
         public int Id { get; set; }
         
-        public LibraryAsset LibraryAsset { get; set; }
-
-        public LibraryBranch LibraryBranch { get; set; }
+        public AssetInLibrary LibraryAsset { get; set; }
 
         public LibraryCard LibraryCard { get; set; }
 

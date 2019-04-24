@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using Application.Catalogs.Queries.GetBooksList;
 using Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,6 +14,7 @@ using Application.Infracstructure;
 using LibTutorial.Filters;
 using FluentValidation.AspNetCore;
 using Application.Catalogs.Commands.Checkout;
+using Application.Catalogs.Queries.GetProductsList;
 
 namespace LibTutorial {
     public class Startup {
@@ -35,19 +35,17 @@ namespace LibTutorial {
             services.AddAutoMapper(new Assembly[] { typeof(AutoMapperProfile).GetTypeInfo().Assembly });
             // Add Mediator
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehavior<,>));
-            services.AddMediatR(typeof(BookCheckOutHandler).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(ProductCheckOutHandler).GetTypeInfo().Assembly);
 
             //services.AddScoped<ILibraryAsset, LibraryAssetService>();
             //services.AddScoped<ICheckoutService, CheckoutService>();
-            services.AddDbContext<LibraryContext>(options => options.UseSqlServer(Configuration.GetConnectionString("LibraryConnection")));
+            services.AddDbContext<LibraryContext>(options => options.UseSqlServer(Configuration.GetConnectionString("LibLocalDatabase")));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services
                 .AddMvc(options => options.Filters.Add(typeof(CustomExceptionFilterAttribute)))
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CheckoutCommandValidator>());
-
-            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
