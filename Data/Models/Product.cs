@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Data.Models {
+namespace Domain.Models {
     public class Product {
         public int Id { get; set; }
         public string Title { get; set; }   

@@ -1,7 +1,7 @@
 ﻿using Application.Catalogs.Models;
 using Application.Infracstructure.PredicateBuilder.PredicateHelpers;
+using Application.Interfaces;
 using AutoMapper;
-using Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace Application.Catalogs.Queries.GetProductsList {
     public class ProductCheckOutHandler : IRequestHandler<GetProductsListQuery, ProductsListViewDto> {
-        private readonly LibraryContext _context;
+        private readonly IWebDbContext _context;
         private readonly IMapper _mapper;
 
-        public ProductCheckOutHandler(LibraryContext context, IMapper mapper) {
+        public ProductCheckOutHandler(IWebDbContext context, IMapper mapper) {
             _context = context;
             _mapper = mapper;
         }

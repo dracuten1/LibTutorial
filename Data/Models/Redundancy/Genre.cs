@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Data.Models {
+namespace Domain.Models {
     public class Genre {
         public int Id { get; set; }
         public string Name { get; set; }

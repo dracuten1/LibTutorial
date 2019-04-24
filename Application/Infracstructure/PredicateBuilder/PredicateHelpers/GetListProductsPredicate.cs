@@ -1,6 +1,6 @@
 ﻿using Application.Catalogs.Queries.GetProductsList;
 using Application.Interfaces.Predicate;
-using Data.Models;
+using Domain.Models;
 
 namespace Application.Infracstructure.PredicateBuilder.PredicateHelpers {
     public class GetListProductsPredicate: APredicateHelper<Product> {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Data.Models {
+namespace Domain.Models {
     public class AttributeValue {
         public int Id { get; set; }
         public int AttributeTypeId { get; set; }

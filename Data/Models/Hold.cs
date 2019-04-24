@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Data.Models {
+namespace Domain.Models {
     public class Hold {
         public int Id { get; set; }
         public virtual AssetInLibrary LibraryAsset { get; set; }

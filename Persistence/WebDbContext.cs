@@ -1,9 +1,10 @@
-﻿using Data.Models;
+﻿using Application.Interfaces;
+using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Data {
-    public class LibraryContext : DbContext {
-        public LibraryContext(DbContextOptions options):base(options) {
+namespace Persistence {
+    public class WebDbContext : DbContext, IWebDbContext {
+        public WebDbContext(DbContextOptions options) : base(options) {
 
         }
 
@@ -20,5 +21,4 @@ namespace Data {
         public virtual DbSet<CategoryAttribute> AttributeTypes { get; set; }
         public virtual DbSet<AttributeValue> AttributeValues { get; set; }
     }
-
 }

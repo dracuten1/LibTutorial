@@ -2,16 +2,17 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Data;
-using Data.Models;
+using Application.Interfaces;
+using Domain;
+using Domain.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Catalogs.Commands.Checkout {
     public class CheckoutCommandHandler : IRequestHandler<CheckoutCommand, Unit> {
-        private readonly LibraryContext _context;
+        private readonly IWebDbContext _context;
 
-        public CheckoutCommandHandler(LibraryContext context) {
+        public CheckoutCommandHandler(IWebDbContext context) {
             _context = context;
         }
         public async Task<Unit> Handle(CheckoutCommand request, CancellationToken cancellationToken) {

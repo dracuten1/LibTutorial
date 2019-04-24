@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Data.Models {
+namespace Domain.Models {
     public class Book : Product {
         public string ISBN { get; set; }
         public string Author { get; set; }

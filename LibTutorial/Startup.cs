@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using Data;
+using Domain;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -15,6 +15,8 @@ using LibTutorial.Filters;
 using FluentValidation.AspNetCore;
 using Application.Catalogs.Commands.Checkout;
 using Application.Catalogs.Queries.GetProductsList;
+using Persistence;
+using Application.Interfaces;
 
 namespace LibTutorial {
     public class Startup {
@@ -37,9 +39,8 @@ namespace LibTutorial {
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehavior<,>));
             services.AddMediatR(typeof(ProductCheckOutHandler).GetTypeInfo().Assembly);
 
-            //services.AddScoped<ILibraryAsset, LibraryAssetService>();
-            //services.AddScoped<ICheckoutService, CheckoutService>();
-            services.AddDbContext<LibraryContext>(options => options.UseSqlServer(Configuration.GetConnectionString("LibLocalDatabase")));
+            services.AddDbContext<IWebDbContext,WebDbContext>(options => 
+            options.UseSqlServer(Configuration.GetConnectionString("LibLocalDatabase")));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services

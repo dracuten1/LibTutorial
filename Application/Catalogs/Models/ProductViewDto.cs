@@ -1,7 +1,7 @@
 ﻿using Application.Catalogs.Queries.GetProductsList;
 using Application.Interfaces.Mapping;
 using AutoMapper;
-using Data.Models;
+using Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

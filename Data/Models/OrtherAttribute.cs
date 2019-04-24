@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Data.Models {
+namespace Domain.Models {
     public class CategoryAttribute {        
         public int Id { get; set; }
         public string Name { get; set; }

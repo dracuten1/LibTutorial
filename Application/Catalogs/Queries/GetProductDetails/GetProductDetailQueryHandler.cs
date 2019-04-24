@@ -1,6 +1,7 @@
 ﻿using Application.Catalogs.Models;
+using Application.Interfaces;
 using AutoMapper;
-using Data;
+using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -10,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace Application.Catalogs.Queries.GetProductDetails {
     public class GetProductDetailQueryHandler : IRequestHandler<GetProductDetailQuery, ProductDetailViewDto> {
-        private readonly LibraryContext _context;
+        private readonly IWebDbContext _context;
         private readonly IMapper _mapper;
 
-        public GetProductDetailQueryHandler(LibraryContext context, IMapper mapper) {
+        public GetProductDetailQueryHandler(IWebDbContext context, IMapper mapper) {
             _context = context;
             _mapper = mapper;
         }

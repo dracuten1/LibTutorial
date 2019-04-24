@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Data.Models {
+namespace Domain.Models {
     public class AssetInLibrary {
         public int Id { get; set; }
         public virtual LibraryBranch Location { get; set; }

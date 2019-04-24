@@ -1,24 +1,20 @@
 ﻿using Application.Categories.Models;
-using Application.Infracstructure.PredicateBuilder;
 using Application.Infracstructure.PredicateBuilder.PredicateHelpers;
+using Application.Interfaces;
 using AutoMapper;
-using Data;
-using Data.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Application.Categories.Queries {
     public class GetCategoryHandler : IRequestHandler<GetCategoryQuery, ListCategoriesDto> {
-        private readonly LibraryContext libraryContext;
+        private readonly IWebDbContext libraryContext;
         private readonly IMapper mapper;
 
-        public GetCategoryHandler(LibraryContext libraryContext, IMapper mapper) {
+        public GetCategoryHandler(IWebDbContext libraryContext, IMapper mapper) {
             this.libraryContext = libraryContext;
             this.mapper = mapper;
         }

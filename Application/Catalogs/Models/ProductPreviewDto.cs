@@ -1,6 +1,6 @@
 ﻿using Application.Interfaces.Mapping;
 using AutoMapper;
-using Data.Models;
+using Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
 

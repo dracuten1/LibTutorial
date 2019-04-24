@@ -1,4 +1,4 @@
-﻿using Data.Models;
+﻿using Domain.Models;
 using System.Collections.Generic;
 
 namespace LibTutorial.Models.Catalog {

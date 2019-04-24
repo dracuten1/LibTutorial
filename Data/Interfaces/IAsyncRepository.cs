@@ -1,8 +1,8 @@
-﻿using Data.Models;
+﻿using Domain.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Data.Interfaces {
+namespace Domain.Interfaces {
     public interface IAsyncRepository<T> where T : BaseEntity {
         Task<T> GetByIdAsync(int id);
         Task<IReadOnlyList<T>> ListAllAsync();

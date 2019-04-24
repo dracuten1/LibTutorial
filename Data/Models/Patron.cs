@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Data.Models {
+namespace Domain.Models {
     public class Patron {
         public int Id { get; set; }
         public string FirstName { get; set; }

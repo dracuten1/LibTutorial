@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Data.Exceptions {
+namespace Domain.Exceptions {
     public class AssetExistedException : Exception {
         public AssetExistedException(string message, string name) : base(message) {
             ViolentName = new string(name);
